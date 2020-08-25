@@ -1,0 +1,19 @@
+en:
+  activerecord:
+    models:
+      spree/home_section:
+        one: Home Section
+        other: Home Sections
+    attributes:
+      spree/home_section:
+        title: Title
+        section_type: Section Type
+        internal_name: Internal Name
+        visible: Visible
+  spree:
+    home_section_menu_name: Homepage
+    back_to_home_sections_list: Back To Sections List
+    edit_home_section: Edit Section
+    new_home_section: New Section
+    product_placeholder: Choose a product
+    select_image: Select an image

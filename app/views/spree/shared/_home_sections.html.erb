@@ -1,0 +1,226 @@
+<% product_partial ||= 'spree/products/product' %>
+<% product_locals ||= {} %>
+
+<% home_sections.where(visible: true).order("position ASC").each_with_index do |section, index| %>
+  <% if false %>
+    <div class="row text-center">
+      <div class="col-sm-12">
+        <% if section.images.attached? %>
+          <% section.images.each do |image| %>
+            <%= image_tag main_app.url_for(image), style: "width: 50px;object-fit: cover;" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if section.main_banner? %>
+    <% item1 = section.items.first %>
+
+    <div class="homepage-hero-image mb-3 position-relative">
+      <img class="lazyload hero-image position-absolute"
+        data-src="<%= main_app.url_for(item1.image) %>"
+        alt="<%= item1.title %>" />
+
+      <div class="hero-content">
+        <div class="homepage-hero-image-text mb-2 mx-auto pb-3 pb-md-4">
+          <%= item1.title %>
+        </div>
+        <div>
+          <%= link_to item1.text_button, item1.link_button, class: 'btn btn-primary spree-btn px-5' %>
+        </div>
+      </div>
+    </div>
+
+  <% elsif section.banner_2? %>
+
+    <div class="container">
+      <div class="row">
+        <% section.items[0..1].each do |item| %>
+          <div class="col-12 col-lg-6">
+            <%= link_to item.link_button do %>
+              <div class="homepage-bottom-box text-center mb-3">
+                <img class="w-100 lazyload"
+                  data-src="<%= main_app.url_for(item.image) %>"
+                  alt="<%= item.title %>" />
+
+                <div class="homepage-bottom-box-inner" role="img" aria-label="<%= item.title %>">
+                  <div class="homepage-bottom-box-inner-small-text">
+                    <%= item.title %>
+                  </div>
+                  <div class="homepage-bottom-box-inner-big-text">
+                    <%= item.text_button %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% elsif section.banner_3? %>
+    <% item1, item2, item3 = section.items %>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+
+          <div class="homepage-taxon-box mb-3">
+            <%= link_to item1.link_button do %>
+              <img class="w-100 lazyload"
+                data-src="<%= main_app.url_for(item1.image) %>"
+                alt="<%= item1.text_button %>" />
+
+              <div class="homepage-taxon-box-text">
+                <h3><%= item1.text_button %></h3>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="homepage-taxon-box">
+            <%= link_to item2.link_button do %>
+              <img class="w-100 lazyload"
+                data-src="<%= main_app.url_for(item2.image) %>"
+                alt="<%= item2.text_button %>" />
+
+              <div class="homepage-taxon-box-text" role="img" aria-label="<%= item1.text_button %>">
+                <h3><%= item2.text_button %></h3>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+
+        <div class="col-6 d-flex flex-column">
+
+          <div class="homepage-taxon-box flex-grow-1">
+            <%= link_to item3.link_button do %>
+              <img class="w-100 lazyload"
+                data-src="<%= main_app.url_for(item3.image) %>"
+                alt="<%= item3.text_button %>" />
+
+              <div class="homepage-taxon-box-text">
+                <h3><%= item3.text_button %></h3>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  <% elsif section.banner_text? %>
+    <% item1 = section.items.first %>
+
+    <div class="homepage-fashion-trends-box mb-3" style="background-image: url(<%= main_app.url_for(item1.image) %>);background-size: cover;background-position: center;">
+      <div class="text-center">
+        <div class="homepage-fashion-trends-box-summer-text mb-1"><%= item1.title %></div>
+        <div class="homepage-fashion-trends-box-fashion-trends-text mb-2"><%= item1.subtitle %></div>
+        <div class="homepage-fashion-trends-box-description-text text-center mb-3">
+          <%= item1.description %>
+        </div>
+        <%= link_to item1.text_button, item1.link_button, class: 'btn px-5 spree-btn btn-outline-primary' %>
+      </div>
+    </div>
+
+  <% elsif section.banner_products? %>
+    <div data-product-carousel="" data-product-carousel-taxon-id="bestsellers" class="my-3" data-product-carousel-loaded="true">
+      <p class="font-weight-bold text-center homepage-carousel-text text-uppercase"><%= section.title %></p>
+
+      <div id="bestsellers-mobile<%= index %>" class="carousel slide d-md-none homepage-carousel" data-interval="false">
+        <div class="carousel-inner">
+
+          <% section.products_by_position.each_slice(2).to_a.each_with_index do |products, i| %>
+
+            <div class="carousel-item <%= 'active' if i == 0 %>">
+              <div class="container">
+                <div class="row carousel-items-container">
+                  <% products.each do |product| %>
+                    <div class="col-6">
+                      <a class="h-100 d-flex flex-column justify-content-between" href="/products/sport-windproof-jacket?taxon_id=19">
+                        <%= plp_and_carousel_image(product, "product-component-image d-block mw-100 w-100 lazyload") %>
+                        <div>
+                          <div class="product-component-name" title="<%= product.name %>">
+                            <%= product.name %>
+                          </div>
+                          <div class="product-component-price"><%= display_price(product) %></div>
+                        </div>
+                      </a>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+
+        <a class="d-flex position-absolute justify-content-center align-items-center carousel-icon-control carousel-icon-control--previous" href="#bestsellers-mobile<%= index %>" role="button" data-slide="prev">
+          <span class="d-flex justify-content-center align-items-center carousel-icon-control-rounded" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 11.344 21.156" width="20px" class="spree-icon spree-icon-arrow spree-icon-arrow-left"><path d="m42.617 25.669a.685.685 0 0 0 .968 0 .685.685 0 0 0 0-.968l-8.515-8.516 8.516-8.516a.685.685 0 0 0 -.968-.968l-9.017 9a.685.685 0 0 0 0 .968z" fill="currentColor" transform="matrix(-1 0 0 -1 44.744 26.869)"></path></svg>
+
+          </span>
+          <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="d-flex position-absolute justify-content-center align-items-center carousel-icon-control carousel-icon-control--next" href="#bestsellers-mobile<%= index %>" role="button" data-slide="next">
+          <span class="d-flex justify-content-center align-items-center carousel-icon-control-rounded" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 11.344 21.156" width="20px" class="spree-icon spree-icon-arrow spree-icon-arrow-right"><path d="m42.617 25.669a.685.685 0 0 0 .968 0 .685.685 0 0 0 0-.968l-8.515-8.516 8.516-8.516a.685.685 0 0 0 -.968-.968l-9.017 9a.685.685 0 0 0 0 .968z" fill="currentColor" transform="matrix(-1 0 0 -1 44.744 26.869)"></path></svg>
+
+          </span>
+          <span class="sr-only">Next</span>
+        </a>
+
+      </div>
+
+      <div id="bestsellers-desktop<%= index %>" class="carousel slide d-none d-md-block homepage-carousel" data-interval="false">
+        <div class="carousel-inner carousel-inner-width">
+
+          <% section.products_by_position.each_slice(4).to_a.each_with_index do |products, i| %>
+
+            <div class="carousel-item <%= 'active' if i == 0 %>">
+              <div class="container position-relative">
+                <a class="d-flex position-absolute justify-content-center align-items-center carousel-icon-control carousel-icon-control--previous" href="#bestsellers-desktop<%= index %>" role="button" data-slide="prev">
+                  <span class="d-flex justify-content-center align-items-center carousel-icon-control-rounded" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 11.344 21.156" width="20px" class="spree-icon spree-icon-arrow spree-icon-arrow-left"><path d="m42.617 25.669a.685.685 0 0 0 .968 0 .685.685 0 0 0 0-.968l-8.515-8.516 8.516-8.516a.685.685 0 0 0 -.968-.968l-9.017 9a.685.685 0 0 0 0 .968z" fill="currentColor" transform="matrix(-1 0 0 -1 44.744 26.869)"></path></svg>
+
+                  </span>
+                  <span class="sr-only">Previous</span>
+                </a>
+
+                <div class="row carousel-items-container">
+                  <% products.each do |product| %>
+                    <div class="col-3">
+                      <a class="h-100 d-flex flex-column justify-content-between" href="<%= spree.product_path(product, taxon_id: @taxon&.id) %>">
+                        <%= plp_and_carousel_image(product, "product-component-image d-block mw-100 w-100 ls-is-cached lazyloaded") %>
+                        <div>
+                          <div class="product-component-name" title="<%= product.name %>">
+                            <%= product.name %>
+                          </div>
+                          <div class="product-component-price"><%= display_price(product) %></div>
+                        </div>
+                      </a>
+                    </div>
+                  <% end %>
+                </div>
+
+                <a class="d-md-flex position-absolute justify-content-center align-items-center carousel-icon-control carousel-icon-control--next" href="#bestsellers-desktop<%= index %>" role="button" data-slide="next">
+                  <span class="d-flex justify-content-center align-items-center carousel-icon-control-rounded" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 11.344 21.156" width="20px" class="spree-icon spree-icon-arrow spree-icon-arrow-right"><path d="m42.617 25.669a.685.685 0 0 0 .968 0 .685.685 0 0 0 0-.968l-8.515-8.516 8.516-8.516a.685.685 0 0 0 -.968-.968l-9.017 9a.685.685 0 0 0 0 .968z" fill="currentColor" transform="matrix(-1 0 0 -1 44.744 26.869)"></path></svg>
+
+                  </span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+<% end %>

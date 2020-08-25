@@ -1,0 +1,34 @@
+require: rubocop-rails
+
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.6.4
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/generators/**/*'
+    - 'bin/rails'
+    - 'lib/spree_easy_homepage/engine.rb'
+
+Rails:
+  Enabled: true
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails/BelongsTo:
+  Exclude:
+    - 'app/models/spree/home_section_product.rb'
+
+Layout/LineLength:
+  Exclude:
+    - 'app/overrides/spree/admin/shared/sub_menu/_configuration.rb'
+    - 'spree_easy_homepage.gemspec'
+
+Rails/RakeEnvironment:
+  Enabled: false
