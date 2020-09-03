@@ -10,8 +10,15 @@ en:
         section_type: Section Type
         internal_name: Internal Name
         visible: Visible
+  helpers:
+    home_section:
+      select_attr:
+        values:
+          option_yes: "Yes"
+          option_no: "No"
   spree:
     home_section_menu_name: Homepage
+    home_section_title_index: Homepage Section
     back_to_home_sections_list: Back To Sections List
     edit_home_section: Edit Section
     new_home_section: New Section

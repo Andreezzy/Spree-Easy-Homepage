@@ -1,0 +1,26 @@
+es:
+  activerecord:
+    models:
+      spree/home_section:
+        one: Sección de Inicio
+        other: Secciones de Inicio
+    attributes:
+      spree/home_section:
+        title: Titulo
+        section_type: Tipo de Sección
+        internal_name: Nombre Interno
+        visible: Visible
+  helpers:
+    home_section:
+      select_attr:
+        values:
+          option_yes: "Si"
+          option_no: "No"
+  spree:
+    home_section_menu_name: Página principal
+    home_section_title_index: Secciones de la pagina principal
+    back_to_home_sections_list: Volver a la Lista de Secciones
+    edit_home_section: Editar Sección
+    new_home_section: Nueva Sección
+    product_placeholder: Escoger un Producto
+    select_image: Seleccionar una Imagen

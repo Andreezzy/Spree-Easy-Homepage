@@ -1,35 +1,40 @@
-<%= render partial: 'spree/shared/error_messages', locals: { target: @home_section } %>
+<%= render partial: 'spree/admin/shared/error_messages', locals: { target: @home_section } %>
 
 <%= render partial: 'spree/admin/home_section_products/line_item', formats: :js %>
 <%= render partial: 'spree/admin/products/autosearch', formats: :js %>
 
 <div class="form-row">
   <div class="form-group col-md-6">
-    <%= f.label :title %>
-    <%= f.text_field :title, class: 'form-control' %>
-    <%= f.error_message_on :title %>
+    <%= f.field_container :title, class: ['form-group'] do %>
+      <%= f.label :title, raw(I18n.t(:title, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
+      <%= f.text_field :title, class: 'form-control', required: :required %>
+      <%= f.error_message_on :title %>
+    <% end %>
   </div>
 
   <div class="form-group col-md-6">
-    <%= f.label :internal_name %>
-    <%= f.text_field :internal_name, class: 'form-control' %>
-    <%= f.error_message_on :internal_name %>
+    <%= f.field_container :internal_name, class: ['form-group'] do %>
+      <%= f.label :internal_name, raw(I18n.t(:internal_name, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
+      <%= f.text_field :internal_name, class: 'form-control', required: :required %>
+      <%= f.error_message_on :internal_name %>
+    <% end %>
   </div>
 </div>
 
 <div class="form-row">
-  <div class="form-group col-md-4">
-    <%= f.label :section_type %>
-    <%= f.select :section_type, Spree::HomeSection.section_types.map { |key, value| [key.humanize, key] }, {}, {class: 'form-control'} %>
-    <%= f.error_message_on :section_type %>
+  <div class="form-group col-md-6">
+    <%= f.field_container :section_type, class: ['form-group'] do %>
+      <%= f.label :section_type, raw(I18n.t(:section_type, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
+      <%= f.select :section_type, Spree::HomeSection.section_types.map { |key, value| [key.humanize, key] }, { include_blank: true }, {class: 'form-control', required: :required} %>
+      <%= f.error_message_on :section_type %>
+    <% end %>
   </div>
-</div>
-
-<div class="form-group">
-  <div class="form-check">
-    <%= f.check_box :visible, class: 'form-check-input' %>
-    <%= f.label :visible, class: 'form-check-label' %>
-    <%= f.error_message_on :visible %>
+  <div class="form-group col-md-6">
+    <%= f.field_container :visible, class: ['form-group'] do %>
+      <%= f.label :visible, raw(I18n.t(:visible, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
+      <%= f.select :visible, [[I18n.t("helpers.home_section.select_attr.values.option_yes"), true], [I18n.t("helpers.home_section.select_attr.values.option_no"), false]], { include_blank: true }, {class: 'form-control', required: :required} %>
+      <%= f.error_message_on :visible %>
+    <% end %>
   </div>
 </div>
 

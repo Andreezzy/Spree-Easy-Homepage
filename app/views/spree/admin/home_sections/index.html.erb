@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= plural_resource_name(Spree::HomeSection) %>
+  <%= Spree.t(:home_section_title_index) %>
 <% end %>
 
 <% content_for :page_actions do %>
@@ -12,9 +12,8 @@
       <tr>
         <th></th>
         <th><%= I18n.t(:title, scope: 'activerecord.attributes.spree/home_section') %></th>
-        <th><%= plural_resource_name(Spree::Product) %></th>
-        <th><%= I18n.t(:section_type, scope: 'activerecord.attributes.spree/home_section') %></th>
         <th><%= I18n.t(:internal_name, scope: 'activerecord.attributes.spree/home_section') %></th>
+        <th><%= I18n.t(:section_type, scope: 'activerecord.attributes.spree/home_section') %></th>        
         <th><%= I18n.t(:visible, scope: 'activerecord.attributes.spree/home_section') %></th>
         <th class="actions"></th>
       </tr>
@@ -26,17 +25,8 @@
             <span class="icon icon-move"></span>
           </td>
           <td><%= home_section.title %></td>
-          <td>
-            <%= home_section.products.count %>
-            <%= I18n.t('activerecord.models.spree/product', count: home_section.products.count) %>
-            <%= '-' if home_section.products.any? %>
-            <% home_section.products_by_position.each_with_index do |product, index| %>
-              <%= link_to "\"#{product.try(:name)}\"", edit_admin_product_path(product), target: '_blank' %>
-              <%= ', ' if index < home_section.products.count - 1 %>
-            <% end %>
-          </td>
-          <td><%= home_section.section_type %></td>
           <td><%= home_section.internal_name %></td>
+          <td><%= home_section.section_type %></td>
           <td><%= home_section.visible %></td>
           <td class="actions actions-2 text-right">
             <%= link_to_edit(home_section, no_text: true) if can?(:edit, home_section) %>
