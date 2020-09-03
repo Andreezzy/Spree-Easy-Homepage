@@ -14,6 +14,7 @@ Getting Started
 
 ```ruby
 gem 'spree_easy_homepage'
+gem 'spree_easy_homepage', git: 'https://github.com/Andreezzy/Spree-Easy-Homepage'
 ```
 
 ##### Install the gem
