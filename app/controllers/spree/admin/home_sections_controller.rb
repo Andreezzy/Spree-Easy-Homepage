@@ -1,6 +1,27 @@
 module Spree
   module Admin
 	class HomeSectionsController < ResourceController
+		def create
+			#Spree core implementation update method
+			invoke_callbacks(:create, :before)
+			@object.attributes = permitted_resource_params
+			if @object.save
+				invoke_callbacks(:create, :after)
+				flash[:success] = flash_message_for(@object, :successfully_created)
+				respond_with(@object) do |format|
+					#I changed this redirect
+					format.html { redirect_to edit_admin_home_section_path(@object) }
+					format.js   { render layout: false }
+				end
+			else
+				invoke_callbacks(:create, :fails)
+				respond_with(@object) do |format|
+					format.html { render action: :new }
+					format.js { render layout: false }
+				end
+			end
+		end
+
 		def edit
 			@items = generate_items
 			super
@@ -27,7 +48,26 @@ module Spree
 				#end
 				#params[:home_section] = params[:home_section].except(:images)
 			#end
-			super
+
+			#Spree core implementation update method
+			invoke_callbacks(:update, :before)
+			if @object.update(permitted_resource_params)
+				invoke_callbacks(:update, :after)
+				respond_with(@object) do |format|
+					format.html do
+						flash[:success] = flash_message_for(@object, :successfully_updated)
+						#I changed this redirect
+						redirect_to edit_admin_home_section_path(@object)
+					end
+					format.js { render layout: false }
+				end
+			else
+				invoke_callbacks(:update, :fails)
+				respond_with(@object) do |format|
+					format.html { render action: :edit }
+					format.js { render layout: false }
+				end
+			end
 		end
 		def destroy
 			if params.has_key?("img")

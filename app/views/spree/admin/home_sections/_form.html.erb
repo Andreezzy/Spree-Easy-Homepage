@@ -25,14 +25,14 @@
   <div class="form-group col-md-6">
     <%= f.field_container :section_type, class: ['form-group'] do %>
       <%= f.label :section_type, raw(I18n.t(:section_type, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
-      <%= f.select :section_type, Spree::HomeSection.section_types.map { |key, value| [key.humanize, key] }, { include_blank: true }, {class: 'form-control', required: :required} %>
+      <%= f.select :section_type, Spree::HomeSection.section_types.map { |key, value| [I18n.t("helpers.home_section.select_section_type.values.#{key}"), key] }, { include_blank: true }, {class: 'form-control', required: :required} %>
       <%= f.error_message_on :section_type %>
     <% end %>
   </div>
   <div class="form-group col-md-6">
     <%= f.field_container :visible, class: ['form-group'] do %>
       <%= f.label :visible, raw(I18n.t(:visible, scope: 'activerecord.attributes.spree/home_section') + required_span_tag) %>
-      <%= f.select :visible, [[I18n.t("helpers.home_section.select_attr.values.option_yes"), true], [I18n.t("helpers.home_section.select_attr.values.option_no"), false]], { include_blank: true }, {class: 'form-control', required: :required} %>
+      <%= f.select :visible, [[I18n.t("helpers.home_section.select_visible.values.option_yes"), true], [I18n.t("helpers.home_section.select_visible.values.option_no"), false]], { include_blank: true }, {class: 'form-control', required: :required} %>
       <%= f.error_message_on :visible %>
     <% end %>
   </div>
@@ -41,44 +41,29 @@
 <% if action_name == "edit" %>
   <% unless @home_section.banner_products?  %>
 
-    <% @items.each do |item| %>
-      <div class="card mb-12">
-        <div class="row no-gutters">
-          <div class="col-md-4">
-            <% if item.image.attached? %>
-              <%= image_tag main_app.url_for(item.image), class: "card-img" %>
-              <p>
-                <%= link_to 'Remove', "#{admin_home_section_path(@home_section.id)}?img=#{item.image.signed_id}", method: :delete, data: { confirm: 'Are you sure?' } %>
-              </p>
-            <% end %>
-            <div class="custom-file">
-              <input type="file" name="home_section[home_section_items_attributes][<%= item.id %>][image]" class="custom-file-input" id="home_section_<%= item.id %>_title" lang="es">
-              <label class="custom-file-label" for="home_section_<%= item.id %>_title" style="overflow: hidden;text-overflow:ellipsis;"><%= Spree.t(:select_image) %></label>
-            </div>
-          </div>
+    <% @items.each_with_index do |item, index| %>
+      <div class="card">
+        <div class="card-header">
+          Configuración <%= text_image_configuration(@home_section.banner_3?, index) %>
+        </div>
+        <div class="card-body">
+          <div class="mb-12">
 
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title"></h5>
-              <p class="card-text">
-                <% if @home_section.banner_text? || @home_section.main_banner? || @home_section.banner_2? %>
-                  <div class="form-group">
-                    <label for="home_section_<%= item.id %>_title">Titulo</label>
-                    <input class="form-control internal_name" type="text" value="<%= item.title %>" name="home_section[home_section_items_attributes][<%= item.id %>][title]" id="home_section_<%= item.id %>_title">
-                  </div>
-                <% end %>
+            <% if @home_section.banner_text?  %>
 
-                <% if @home_section.banner_text?  %>
-                  <div class="form-group">
-                    <label for="home_section_<%= item.id %>_subtitle">Subtitulo</label>
-                    <input class="form-control internal_name" type="text" value="<%= item.subtitle %>" name="home_section[home_section_items_attributes][<%= item.id %>][subtitle]" id="home_section_<%= item.id %>_subtitle">
-                  </div>
-                  <div class="form-group">
-                    <label for="home_section_<%= item.id %>_description">Descripcion</label>
-                    <input class="form-control internal_name" type="text" value="<%= item.description %>" name="home_section[home_section_items_attributes][<%= item.id %>][description]" id="home_section_<%= item.id %>_description">
-                  </div>
-                <% end %>
-
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="home_section_<%= item.id %>_subtitle">Subtitulo</label>
+                  <input class="form-control internal_name" type="text" value="<%= item.subtitle %>" name="home_section[home_section_items_attributes][<%= item.id %>][subtitle]" id="home_section_<%= item.id %>_subtitle">
+                </div>
+                <div class="form-group">
+                  <label for="home_section_<%= item.id %>_title">Titulo</label>
+                  <input class="form-control internal_name" type="text" value="<%= item.title %>" name="home_section[home_section_items_attributes][<%= item.id %>][title]" id="home_section_<%= item.id %>_title">
+                </div>
+                <div class="form-group">
+                  <label for="home_section_<%= item.id %>_description">Descripcion</label>
+                  <input class="form-control internal_name" type="text" value="<%= item.description %>" name="home_section[home_section_items_attributes][<%= item.id %>][description]" id="home_section_<%= item.id %>_description">
+                </div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="home_section_<%= item.id %>_text_button">Texto Boton</label>
@@ -89,9 +74,67 @@
                     <input class="form-control internal_name" type="text" value="<%= item.link_button %>" name="home_section[home_section_items_attributes][<%= item.id %>][link_button]" id="home_section_<%= item.id %>_link_button">
                   </div>
                 </div>
-              </p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
+              </div>
+
+            <% else %>
+
+              <div class="row">
+
+                <div class="col-md-4">
+                  <% if item.image.attached? %>
+                    <%= image_tag main_app.url_for(item.image), class: "card-img" %>
+                    <p><%= link_to 'Remove', "#{admin_home_section_path(@home_section.id)}?img=#{item.image.signed_id}", method: :delete, data: { confirm: 'Are you sure?' } %></p>
+                  <% end %>
+                  <div class="custom-file">
+                    <input type="file" name="home_section[home_section_items_attributes][<%= item.id %>][image]" class="custom-file-input" id="home_section_<%= item.id %>_image" lang="es" <%= "required" unless item.image.attached? %>>
+                    <label class="custom-file-label" for="home_section_<%= item.id %>_image" style="overflow: hidden;text-overflow:ellipsis;"><%= Spree.t(:select_image) %></label>
+                  </div>
+                </div>
+
+                <div class="col-md-8">
+
+                  <% if @home_section.main_banner? || @home_section.banner_2? %>
+
+                    <div class="form-group">
+                      <label for="home_section_<%= item.id %>_title">Titulo</label>
+                      <input class="form-control internal_name" type="text" value="<%= item.title %>" name="home_section[home_section_items_attributes][<%= item.id %>][title]" id="home_section_<%= item.id %>_title">
+                    </div>
+
+                  <% end %>
+
+                  <% if @home_section.banner_2? %>
+
+                    <div class="form-group">
+                      <label for="home_section_<%= item.id %>_subtitle">Subtitulo</label>
+                      <input class="form-control internal_name" type="text" value="<%= item.subtitle %>" name="home_section[home_section_items_attributes][<%= item.id %>][subtitle]" id="home_section_<%= item.id %>_subtitle">
+                    </div>
+                    <div class="form-group">
+                      <label for="home_section_<%= item.id %>_link_button">Link Boton</label>
+                      <input class="form-control internal_name" type="text" value="<%= item.link_button %>" name="home_section[home_section_items_attributes][<%= item.id %>][link_button]" id="home_section_<%= item.id %>_link_button">
+                    </div>
+
+                  <% else %>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="home_section_<%= item.id %>_text_button">Texto Boton</label>
+                        <input class="form-control internal_name" type="text" value="<%= item.text_button %>" name="home_section[home_section_items_attributes][<%= item.id %>][text_button]" id="home_section_<%= item.id %>_text_button">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="home_section_<%= item.id %>_link_button">Link Boton</label>
+                        <input class="form-control internal_name" type="text" value="<%= item.link_button %>" name="home_section[home_section_items_attributes][<%= item.id %>][link_button]" id="home_section_<%= item.id %>_link_button">
+                      </div>
+                    </div>
+
+                  <% end %>
+
+                  <p class="card-text"><small class="text-muted">Para que la imagen se visualice correctamente las medidas de ella debe ser <%= text_size_by_type(@home_section, index) %>, o esta bajara su calidad</small></p>
+
+                </div>
+              </div>
+
+            <% end %>
+
           </div>
         </div>
       </div>
@@ -99,43 +142,53 @@
 
   <% else %>
 
-    <div class="form-group">
-      <table class="table">
-        <thead data-hook="home_sections_product_header">
-          <tr>
-            <th></th>
-            <th><%= Spree.t(:image) %></th>
-            <th><%= plural_resource_name(Spree::Product) %></th>
-            <th class="actions"></th>
-          </tr>
-        </thead>
-        <%= content_tag :tbody,
-          id: "section-product-list",
-          data: {
-            home_sections: parse_home_sections(@home_section)
-        } do %>
-
-        <% end %>
-      </table>
-    </div>
-
-    <%= hidden_field_tag 'home_section[force_delete]', true %>
-
-    <div class="card mb-3">
+    <div class="card">
       <div class="card-header">
-        <h1 class="card-title mb-0 h5"><%= Spree.t(:add_product) %></h1>
+        Configuración
       </div>
       <div class="card-body">
-        <div class="form-group">
-          <%= label_tag :product_search, Spree.t(:name_or_sku) %>
-          <%= hidden_field_tag :product_search, "",
-            class: "product-autosearch d-block w-100"
-          %>
+        <div class="mb-12">
+          <div class="form-group">
+            <table class="table">
+              <thead data-hook="home_sections_product_header">
+                <tr>
+                  <th></th>
+                  <th><%= Spree.t(:image) %></th>
+                  <th><%= plural_resource_name(Spree::Product) %></th>
+                  <th class="actions"></th>
+                </tr>
+              </thead>
+              <%= content_tag :tbody,
+                id: "section-product-list",
+                data: {
+                  home_sections: parse_home_sections(@home_section)
+              } do %>
+
+              <% end %>
+            </table>
+          </div>
+
+          <%= hidden_field_tag 'home_section[force_delete]', true %>
+
+          <div class="card mb-3">
+            <div class="card-header">
+              <h1 class="card-title mb-0 h5"><%= Spree.t(:add_product) %></h1>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <%= label_tag :product_search, Spree.t(:name_or_sku) %>
+                <%= hidden_field_tag :product_search, "",
+                  class: "product-autosearch d-block w-100"
+                %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
   <% end %>
+    
 <% end %>
 <br/>
 

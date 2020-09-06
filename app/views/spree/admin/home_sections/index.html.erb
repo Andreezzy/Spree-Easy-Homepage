@@ -26,7 +26,7 @@
           </td>
           <td><%= home_section.title %></td>
           <td><%= home_section.internal_name %></td>
-          <td><%= home_section.section_type %></td>
+          <td><%= I18n.t("helpers.home_section.select_section_type.values.#{home_section.section_type}") %></td>
           <td><%= home_section.visible %></td>
           <td class="actions actions-2 text-right">
             <%= link_to_edit(home_section, no_text: true) if can?(:edit, home_section) %>

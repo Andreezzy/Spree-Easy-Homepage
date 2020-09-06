@@ -10,6 +10,20 @@ module Spree
       Spree::HomeSection.all
     end
 
+    def text_size_by_type(home_section, index)
+      if home_section.main_banner?
+        "1440 x 600"
+      elsif home_section.banner_2?
+        "540 x 350"
+      elsif home_section.banner_3?
+        index == 2 ? "540 x 800" : "540 x 388"
+      end
+    end
+    def text_image_configuration(banner_3, index)
+      return index + 1 unless banner_3
+      index != 2 ? "imagen pequeña #{index + 1}" : "imagen grande"
+    end
+
     private
 
     def get_homesection_partial(partial: home_section_partial, **partial_args)

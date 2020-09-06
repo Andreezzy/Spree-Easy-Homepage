@@ -23,12 +23,16 @@
         alt="<%= item1.title %>" />
 
       <div class="hero-content">
-        <div class="homepage-hero-image-text mb-2 mx-auto pb-3 pb-md-4">
-          <%= item1.title %>
-        </div>
-        <div>
-          <%= link_to item1.text_button, item1.link_button, class: 'btn btn-primary spree-btn px-5' %>
-        </div>
+        <% unless item1.title.blank? %>
+          <div class="homepage-hero-image-text mb-2 mx-auto pb-3 pb-md-4">
+            <%= item1.title %>
+          </div>
+        <% end %>
+        <% unless item1.text_button.blank? %>
+          <div>
+            <%= link_to item1.text_button, item1.link_button, class: 'btn btn-primary spree-btn px-5' %>
+          </div>
+        <% end %>
       </div>
     </div>
 
@@ -43,15 +47,16 @@
                 <img class="w-100 lazyload"
                   data-src="<%= main_app.url_for(item.image) %>"
                   alt="<%= item.title %>" />
-
-                <div class="homepage-bottom-box-inner" role="img" aria-label="<%= item.title %>">
-                  <div class="homepage-bottom-box-inner-small-text">
-                    <%= item.title %>
+                <% unless item.subtitle.blank? %>
+                  <div class="homepage-bottom-box-inner" role="img" aria-label="<%= item.title %>">
+                    <div class="homepage-bottom-box-inner-small-text">
+                      <%= item.title %>
+                    </div>
+                    <div class="homepage-bottom-box-inner-big-text">
+                      <%= item.subtitle %>
+                    </div>
                   </div>
-                  <div class="homepage-bottom-box-inner-big-text">
-                    <%= item.text_button %>
-                  </div>
-                </div>
+                <% end %>
               </div>
             <% end %>
           </div>
@@ -69,24 +74,24 @@
           <div class="homepage-taxon-box mb-3">
             <%= link_to item1.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item1.image) %>"
-                alt="<%= item1.text_button %>" />
-
-              <div class="homepage-taxon-box-text">
-                <h3><%= item1.text_button %></h3>
-              </div>
+                data-src="<%= main_app.url_for(item1.image) %>" />
+              <% unless item1.text_button.blank? %>
+                <div class="homepage-taxon-box-text">
+                  <h3><%= item1.text_button %></h3>
+                </div>
+              <% end %>
             <% end %>
           </div>
 
           <div class="homepage-taxon-box">
             <%= link_to item2.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item2.image) %>"
-                alt="<%= item2.text_button %>" />
-
-              <div class="homepage-taxon-box-text" role="img" aria-label="<%= item1.text_button %>">
-                <h3><%= item2.text_button %></h3>
-              </div>
+                data-src="<%= main_app.url_for(item2.image) %>" />
+              <% unless item2.text_button.blank? %>
+                <div class="homepage-taxon-box-text" role="img" aria-label="<%= item1.text_button %>">
+                  <h3><%= item2.text_button %></h3>
+                </div>
+              <% end %>
             <% end %>
           </div>
 
@@ -97,12 +102,12 @@
           <div class="homepage-taxon-box flex-grow-1">
             <%= link_to item3.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item3.image) %>"
-                alt="<%= item3.text_button %>" />
-
-              <div class="homepage-taxon-box-text">
-                <h3><%= item3.text_button %></h3>
-              </div>
+                data-src="<%= main_app.url_for(item3.image) %>" />
+              <% unless item3.text_button.blank? %>
+                <div class="homepage-taxon-box-text">
+                  <h3><%= item3.text_button %></h3>
+                </div>
+              <% end %>
             <% end %>
           </div>
 
@@ -120,7 +125,9 @@
         <div class="homepage-fashion-trends-box-description-text text-center mb-3">
           <%= item1.description %>
         </div>
-        <%= link_to item1.text_button, item1.link_button, class: 'btn px-5 spree-btn btn-outline-primary' %>
+        <% unless item1.text_button.blank? %>
+          <%= link_to item1.text_button, item1.link_button, class: 'btn px-5 spree-btn btn-outline-primary' %>
+        <% end %>
       </div>
     </div>
 
