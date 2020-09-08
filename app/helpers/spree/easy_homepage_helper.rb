@@ -19,9 +19,33 @@ module Spree
         index == 2 ? "540 x 800" : "540 x 388"
       end
     end
+
     def text_image_configuration(banner_3, index)
       return index + 1 unless banner_3
       index != 2 ? "imagen pequeña #{index + 1}" : "imagen grande"
+    end
+
+    def get_image_for(section, item, big = nil)
+      if section.main_banner?
+        if item.image.attached?
+          main_app.url_for(item.image)
+        else
+          asset_path('homepage/main_banner.jpg')
+        end
+      elsif section.banner_2?
+        if item.image.attached?
+          main_app.url_for(item.image)
+        else
+          asset_path('homepage/promo_banner_left.jpg')
+        end
+      elsif section.banner_3?
+        if item.image.attached?
+          main_app.url_for(item.image)
+        else
+          big ? asset_path('homepage/big_category_banner.jpg') : asset_path('homepage/category_banner_upper.jpg')
+        end
+      end
+
     end
 
     private

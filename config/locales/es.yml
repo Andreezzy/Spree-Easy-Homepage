@@ -12,10 +12,17 @@ es:
         visible: Visible
   helpers:
     home_section:
-      select_attr:
+      select_visible:
         values:
           option_yes: "Si"
           option_no: "No"
+        select_section_type:
+          values:
+            main_banner: Imagen principal con texto y boton
+            banner_2: 2 Columnas con imagen, subtitulo y titulo
+            banner_3: 3 Categorias principales
+            banner_text: Informativa con boton
+            banner_products: Lista de productos
   spree:
     home_section_menu_name: Página principal
     home_section_title_index: Secciones de la pagina principal

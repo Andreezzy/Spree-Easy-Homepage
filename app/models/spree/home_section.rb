@@ -20,7 +20,8 @@ module Spree
     enum section_type: { main_banner: 0, banner_2: 1, banner_3: 2, banner_text: 3, banner_products: 4 }
 
     #validations
-    validates_presence_of :title, :section_type, :internal_name, :visible
+    validates_presence_of :title, :section_type, :internal_name
+    validates_inclusion_of :visible, :in => [true, false]
 
     def get_images_size_for_banner
       num_of_images = [1, 2, 3, 1, 0]

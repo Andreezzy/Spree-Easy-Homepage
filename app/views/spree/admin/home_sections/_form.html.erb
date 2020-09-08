@@ -44,7 +44,7 @@
     <% @items.each_with_index do |item, index| %>
       <div class="card">
         <div class="card-header">
-          Configuración <%= text_image_configuration(@home_section.banner_3?, index) %>
+          Configuración <%= text_image_configuration(@home_section.banner_3?, index) unless @home_section.main_banner? %>
         </div>
         <div class="card-body">
           <div class="mb-12">

@@ -17,9 +17,9 @@
   <% if section.main_banner? %>
     <% item1 = section.items.first %>
 
-    <div class="homepage-hero-image mb-3 position-relative">
+    <div class="homepage-hero-image position-relative" style="margin-bottom: 10px;">
       <img class="lazyload hero-image position-absolute"
-        data-src="<%= main_app.url_for(item1.image) %>"
+        data-src="<%= get_image_for(section, item1) %>"
         alt="<%= item1.title %>" />
 
       <div class="hero-content">
@@ -38,14 +38,14 @@
 
   <% elsif section.banner_2? %>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 10px;">
       <div class="row">
         <% section.items[0..1].each do |item| %>
           <div class="col-12 col-lg-6">
             <%= link_to item.link_button do %>
               <div class="homepage-bottom-box text-center mb-3">
                 <img class="w-100 lazyload"
-                  data-src="<%= main_app.url_for(item.image) %>"
+                  data-src="<%= get_image_for(section, item) %>"
                   alt="<%= item.title %>" />
                 <% unless item.subtitle.blank? %>
                   <div class="homepage-bottom-box-inner" role="img" aria-label="<%= item.title %>">
@@ -67,14 +67,14 @@
   <% elsif section.banner_3? %>
     <% item1, item2, item3 = section.items %>
 
-    <div class="container">
+    <div class="container" style="margin-bottom: 10px;">
       <div class="row">
         <div class="col-6">
 
           <div class="homepage-taxon-box mb-3">
             <%= link_to item1.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item1.image) %>" />
+                data-src="<%= get_image_for(section, item1, false) %>" />
               <% unless item1.text_button.blank? %>
                 <div class="homepage-taxon-box-text">
                   <h3><%= item1.text_button %></h3>
@@ -86,7 +86,7 @@
           <div class="homepage-taxon-box">
             <%= link_to item2.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item2.image) %>" />
+                data-src="<%= get_image_for(section, item2, false) %>" />
               <% unless item2.text_button.blank? %>
                 <div class="homepage-taxon-box-text" role="img" aria-label="<%= item1.text_button %>">
                   <h3><%= item2.text_button %></h3>
@@ -102,7 +102,7 @@
           <div class="homepage-taxon-box flex-grow-1">
             <%= link_to item3.link_button do %>
               <img class="w-100 lazyload"
-                data-src="<%= main_app.url_for(item3.image) %>" />
+                data-src="<%= get_image_for(section, item3, true) %>" />
               <% unless item3.text_button.blank? %>
                 <div class="homepage-taxon-box-text">
                   <h3><%= item3.text_button %></h3>
@@ -118,7 +118,7 @@
   <% elsif section.banner_text? %>
     <% item1 = section.items.first %>
 
-    <div class="homepage-fashion-trends-box mb-3" style="background-image: url(<%= main_app.url_for(item1.image) %>);background-size: cover;background-position: center;">
+    <div class="homepage-fashion-trends-box" style="margin-bottom: 10px;">
       <div class="text-center">
         <div class="homepage-fashion-trends-box-summer-text mb-1"><%= item1.title %></div>
         <div class="homepage-fashion-trends-box-fashion-trends-text mb-2"><%= item1.subtitle %></div>
@@ -132,7 +132,7 @@
     </div>
 
   <% elsif section.banner_products? %>
-    <div data-product-carousel="" data-product-carousel-taxon-id="bestsellers" class="my-3" data-product-carousel-loaded="true">
+    <div data-product-carousel="" data-product-carousel-taxon-id="bestsellers" class="my-3" data-product-carousel-loaded="true" style="margin-bottom: 10px;">
       <p class="font-weight-bold text-center homepage-carousel-text text-uppercase"><%= section.title %></p>
 
       <div id="bestsellers-mobile<%= index %>" class="carousel slide d-md-none homepage-carousel" data-interval="false">
