@@ -42,7 +42,7 @@
   <% unless @home_section.banner_products?  %>
 
     <% @items.each_with_index do |item, index| %>
-      <div class="card">
+      <div class="card" style="margin-bottom: 10px;">
         <div class="card-header">
           Configuración <%= text_image_configuration(@home_section.banner_3?, index) unless @home_section.main_banner? %>
         </div>
